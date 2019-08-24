@@ -1,11 +1,13 @@
 import React from 'react';
 
-class LoginForm extends React.Component {
+class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
       error: false,
       errorMessage: null
     }
@@ -34,6 +36,26 @@ class LoginForm extends React.Component {
               </div>
             </div>
           </div>
+          <div className="row">
+            <div className="col">
+              <div class="form-group">
+                <label htmlFor="firstName">First Name</label>
+                <input
+                  className="form-control"
+                  name="firstName"
+                />
+              </div>
+            </div>
+            <div className="col">
+              <div class="form-group">
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                  className="form-control"
+                  name="lastName"
+                />
+              </div>
+            </div>
+          </div>
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -41,4 +63,4 @@ class LoginForm extends React.Component {
   }
 }
  
-export default LoginForm;
+export default SignupForm;
