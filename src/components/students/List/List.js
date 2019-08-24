@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({assignments, editPost, deletePost}) => {
+export default ({students}) => {
   return(
     <div className="card" style={{width: '100%',background: '#dadada'}}>
       <div className="row">

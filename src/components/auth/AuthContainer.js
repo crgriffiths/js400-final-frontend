@@ -8,10 +8,9 @@ class AuthContainer extends Component {
     this.state = {  }
   }
   render() {
-    const isLoggedIn=true
     return ( 
       <div>
-        { isLoggedIn ? <SignupForm onSubmit={()=>alert('I was submitted')}/> : <LoginForm onSubmit={()=>alert('I was submitted')}/> }
+        { this.props.isLoginPath ?  <LoginForm onSubmit={()=>alert('I was submitted')}/> : <SignupForm onSubmit={()=>alert('I was submitted')}/> }
       </div>
     );
   }

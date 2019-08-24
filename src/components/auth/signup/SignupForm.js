@@ -18,7 +18,7 @@ class SignupForm extends React.Component {
         <form onSubmit={this.props.onSubmit}>
           <div className="row">
             <div className="col">
-              <div class="form-group">
+              <div className="form-group">
                 <label htmlFor="email">Email Address</label>
                 <input
                   className="form-control"
@@ -27,7 +27,7 @@ class SignupForm extends React.Component {
               </div>
             </div>
             <div className="col">
-              <div class="form-group">
+              <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input
                   className="form-control"
@@ -38,7 +38,7 @@ class SignupForm extends React.Component {
           </div>
           <div className="row">
             <div className="col">
-              <div class="form-group">
+              <div className="form-group">
                 <label htmlFor="firstName">First Name</label>
                 <input
                   className="form-control"
@@ -47,7 +47,7 @@ class SignupForm extends React.Component {
               </div>
             </div>
             <div className="col">
-              <div class="form-group">
+              <div className="form-group">
                 <label htmlFor="lastName">Last Name</label>
                 <input
                   className="form-control"
