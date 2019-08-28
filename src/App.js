@@ -1,5 +1,10 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import * as token from './components/helpers/tokens'
+import * as auth from './components/api/auth'
+
+
+// Components
 import Header from './components/shared/Header'
 import AuthContainer from './components/auth/AuthContainer'
 import AuthNav from './components/shared/AuthNav'
@@ -11,7 +16,16 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoggedIn: false
+      currentUserId: null,
+      loading: true
+    }
+  }
+  async componentDidMount () {
+    if (token.getToken()) {
+      const { user } = await auth.profile();
+      this.setState({ currentUserId: user._id, loading: false });
+    } else {
+      this.setState({ loading: false })
     }
   }
   render() {
