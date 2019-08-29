@@ -13,5 +13,5 @@ export const getToken = () => {
 }
 
 export const clearToken = () => {
-    document.cookie = COOKIE_KEY + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  document.cookie = COOKIE_KEY + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }

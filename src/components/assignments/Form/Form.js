@@ -1,15 +1,15 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom'
 import ErrorMsg from '../../shared/ErrorMsg'
+import * as formhelper from '../../helpers/forms'
 
-class SignupForm extends React.Component {
+class AssignmentForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
+    this.state = { 
+      title: '',
+      link: '',
+      description: '',
       validated: false,
       error: false,
       errorMessage: null
@@ -17,13 +17,6 @@ class SignupForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.validated = this.validated.bind(this)
-    this.modifyString = this.modifyString.bind(this)
-  }
-
-  modifyString (string) {
-    return string.split(/(?=[A-Z])/).map(function(p) {
-      return p.charAt(0).toUpperCase() + p.slice(1);
-    }).join(' ');
   }
 
   validated (fields) {
@@ -37,7 +30,7 @@ class SignupForm extends React.Component {
     values.forEach((element,index) => {
       if (element === '') {
         let str = keys[index]
-        str = this.modifyString(str)
+        str = formhelper.modifyString(str)
         errorFields.push(str)
       }
     })
@@ -52,7 +45,6 @@ class SignupForm extends React.Component {
     return false
   }
 
-  
   async handleChange ({ target: { name, value } }) {
     await this.setState({ [name]: value })
   }
@@ -71,67 +63,53 @@ class SignupForm extends React.Component {
       })
     }
   }
-  render() {
-    let error
-    if (this.state.error) {
-      error = <ErrorMsg message={this.state.errorMessage}/>
-    }
-    return(
-      <div className="col-md-6">
+
+render() {
+  //const isEnabled = this.validated(this.state)
+  let error
+  if (this.state.error) {
+    error = <ErrorMsg message={this.state.errorMessage}/>
+  }
+    return (
+      <div className="col-md-12">
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col">
               <div className="form-group">
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="title">Assignment Title</label>
                 <input
                   className="form-control"
-                  name="email"
+                  name="title"
                   onChange={this.handleChange}
-                  type="email"
                 />
               </div>
-            </div>
-            <div className="col">
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="link">Project Link</label>
                 <input
                   className="form-control"
-                  name="password"
-                  onChange={this.handleChange}
-                  minLength={8}
-          
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <div className="form-group">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  className="form-control"
-                  name="firstName"
+                  name="link"
                   onChange={this.handleChange}
                 />
               </div>
             </div>
             <div className="col">
               <div className="form-group">
-                <label htmlFor="lastName">Last Name</label>
-                <input
+                <label htmlFor="description">Description</label>
+                <textarea
                   className="form-control"
-                  name="lastName"
+                  name="description"
                   onChange={this.handleChange}
-                />
+                >
+                </textarea>
               </div>
             </div>
           </div>
           <button type="submit">Submit</button>
         </form>
-        { error }
+        {error}
       </div>
     )
   }
 }
  
-export default withRouter(SignupForm);
+export default withRouter(AssignmentForm)

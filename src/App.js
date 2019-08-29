@@ -82,7 +82,7 @@ class App extends React.Component {
             currentUserId={currentUserId}
             logoutUser={this.logoutUser}
           />
-          <Route exact path='/' render={()=>(currentUserId?<AssignmentContainer/>:<Redirect to='/login'/>)} />
+          <Route path='/' render={()=>(currentUserId?<AssignmentContainer currentUserId={currentUserId}/>:<Redirect to='/login'/>)} />
           <Route exact path='/login' render={()=>(currentUserId?<Redirect to='/'/>:<AuthContainer onSubmit={this.loginUser} isLoginPath={true}/>)} />
           <Route exact path='/signup' render={()=>(currentUserId?<Redirect to='/'/>:<AuthContainer onSubmit={this.signupUser} isLoginPath={false}/>)} />
         </Router>
