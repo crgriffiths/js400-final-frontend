@@ -1,5 +1,5 @@
 const COOKIE_KEY = 'atToken='
-export const setToken = ({ token }) => {
+export const setToken = (token) => {
   document.cookie = `${COOKIE_KEY}${token};max-age=172800;`
 }
 

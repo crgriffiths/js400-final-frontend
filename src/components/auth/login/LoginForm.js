@@ -1,5 +1,6 @@
 import React from 'react';
-import * as auth from '../../api/auth'
+import { withRouter } from 'react-router'
+import ErrorMsg from '../../shared/ErrorMsg'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -7,29 +8,46 @@ class LoginForm extends React.Component {
     this.state = {
       email: '',
       password: '',
+      validated: false,
       error: false,
       errorMessage: null
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.validated = this.validated.bind(this)
+  }
+  validated (fields) {
+    let values = Object.values(fields)
+    if (values.indexOf('') === -1) {
+      return true
+    }
+    return false
   }
 
   handleChange ({ target: { name, value } }) {
     this.setState({ [name]: value })
+    this.validated(this.state)
   }
 
-  async handleSubmit (e) {
+  handleSubmit (e) {
+    this.setState({error: false, errorMessage: null})
     e.preventDefault()
-    const response = await auth.login(this.state)
-    if (response.status !== 200 || response.status !== 201) {
-      this.setState({
-        error: true,
-        errorMsg: response.message
+    this.props.onSubmit({email: this.state.email, password:this.state.password})
+      .then(response => {
+        if (response && response.status !== 200) {
+          this.setState({error: true, errorMessage: response.message})
+        } else {
+          this.props.history.push('/')
+        }
       })
-    }
   }
 
-  render() { 
+  render() {
+    const isEnabled = this.validated(this.state)
+    let error
+    if (this.state.error) {
+      error = <ErrorMsg message={this.state.errorMessage}/>
+    }
     return(
       <div className="col-md-6">
         <form onSubmit={this.handleSubmit}>
@@ -55,11 +73,12 @@ class LoginForm extends React.Component {
               </div>
             </div>
           </div>
-          <button type="submit">Submit</button>
+          <button disabled={!isEnabled} type="submit">Submit</button>
         </form>
+        {error}
       </div>
     )
   }
 }
  
-export default LoginForm;
+export default withRouter(LoginForm);

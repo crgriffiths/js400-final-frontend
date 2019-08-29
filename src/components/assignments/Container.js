@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import AssignmentList from './List/List'
+import List from './List/List';
 
-class AssignmentComponent extends Component {
+class AssignmentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {  }
   }
   render() { 
-    return (  );
+    return (  
+      <AssignmentList/>
+    )
   }
 }
  
-export default AssignmentComponent;
+export default AssignmentContainer;

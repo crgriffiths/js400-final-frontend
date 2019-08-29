@@ -11,6 +11,7 @@ export const login = async (user) => {
     method: 'POST'
   })
     const json = await response.json()
+    console.log(json)
     return json
 }
 
@@ -23,12 +24,11 @@ export const signup = async (user) => {
     method: 'POST'
   })
   const json = await response.json()
-
   return json
 }
 
 export const profile = async () => {
-  const response = fetch (`${API_URL}/api/auth/profile`, {
+  const response = await fetch (`${API_URL}/api/auth/profile`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token.getToken()}`
