@@ -49,16 +49,17 @@ class AssignmentList extends React.Component {
       if(this.props.graded) {
         assignmentList = this.state.gradedAssignments.map((user) => {
           let items = user.assignments.map((assignment) => {
+            console.log(assignment)
+            if (assignment.grade)
             return <ListItemAdmin assignment={assignment} />
           });
           return items
         })
-      }
-    }
-    if(this.props.isAdmin) {
-      if(this.props.ungraded) {
-        assignmentList = this.state.ungradedAssignments.map((user) => {
+      }else{
+        assignmentList = this.state.gradedAssignments.map((user) => {
           let items = user.assignments.map((assignment) => {
+            console.log(assignment.grade)
+            if (!assignment.grade)
             return <ListItemAdmin assignment={assignment} />
           });
           return items
