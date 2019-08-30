@@ -8,6 +8,7 @@ import Header from './components/shared/Header'
 import AuthContainer from './components/auth/AuthContainer'
 import NavContainer from './components/shared/NavContainer';
 import AssignmentContainer from './components/assignments/Container';
+import StudentContainer from './components/students/Container'
 
 class App extends React.Component {
   constructor(props) {
@@ -83,6 +84,7 @@ class App extends React.Component {
             logoutUser={this.logoutUser}
           />
           <Route path='/' render={()=>(currentUserId?<AssignmentContainer currentUserId={currentUserId}/>:<Redirect to='/login'/>)} />
+          <Route path='/students' render={()=>(currentUserId?<StudentContainer currentUserId={currentUserId}/>:<Redirect to='/login'/>)} />
           <Route exact path='/login' render={()=>(currentUserId?<Redirect to='/'/>:<AuthContainer onSubmit={this.loginUser} isLoginPath={true}/>)} />
           <Route exact path='/signup' render={()=>(currentUserId?<Redirect to='/'/>:<AuthContainer onSubmit={this.signupUser} isLoginPath={false}/>)} />
         </Router>
