@@ -9,9 +9,9 @@ import ListItem from './List.Item';
  * [ ] Use this component in a .map() function to render all assignments in the assignments object
  */
 
-export default ({assignments}) => {
-  let assignmentList = assignments.map(assignment => {
-    return <ListItem assignment={assignment}/>
+export default (props) => {
+  let assignmentList = props.assignments.map((assignment) => {
+    return <ListItem assignment={assignment} destroyAssignment={props.destroyAssignment}/>
   })
   return(
     <>

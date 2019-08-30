@@ -1,18 +1,18 @@
 import React from 'react';
 import Form from './Form'
 
-class NewItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {  }
-  }
-  render() { 
-    return (  
-      <div>
-        <Form/>
-      </div>
-    )
-  }
+const EditItem = (props) => {
+  return (  
+    <div>
+      <Form 
+        _id={props.assignment._id}
+        title={props.assignment.title} 
+        link={props.assignment.link} 
+        description={props.assignment.description} 
+        onSubmit={props.onSubmit}
+      />
+    </div>
+  )
 }
  
-export default NewItem;
+export default EditItem;

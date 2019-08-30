@@ -6,10 +6,11 @@ import * as formhelper from '../../helpers/forms'
 class AssignmentForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      title: '',
-      link: '',
-      description: '',
+    this.state = {
+      _id: props._id,
+      title: props.title,
+      link: props.link,
+      description: props.description,
       validated: false,
       error: false,
       errorMessage: null
@@ -17,6 +18,10 @@ class AssignmentForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.validated = this.validated.bind(this)
+  }
+
+  componentDidMount () {
+    console.log('form props:', this.props)
   }
 
   validated (fields) {
@@ -50,6 +55,7 @@ class AssignmentForm extends React.Component {
   }
 
   handleSubmit (e) {
+    console.log(this.props)
     e.preventDefault()
     this.validated(this.state)
     if(this.validated(this.state)) {
@@ -65,7 +71,6 @@ class AssignmentForm extends React.Component {
   }
 
 render() {
-  //const isEnabled = this.validated(this.state)
   let error
   if (this.state.error) {
     error = <ErrorMsg message={this.state.errorMessage}/>
@@ -81,6 +86,7 @@ render() {
                   className="form-control"
                   name="title"
                   onChange={this.handleChange}
+                  value={this.state.title}
                 />
               </div>
               <div className="form-group">
@@ -89,6 +95,7 @@ render() {
                   className="form-control"
                   name="link"
                   onChange={this.handleChange}
+                  value={this.state.link}
                 />
               </div>
             </div>
@@ -99,6 +106,7 @@ render() {
                   className="form-control"
                   name="description"
                   onChange={this.handleChange}
+                  value={this.state.description}
                 >
                 </textarea>
               </div>
