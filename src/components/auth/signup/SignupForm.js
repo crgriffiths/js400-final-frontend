@@ -99,7 +99,7 @@ class SignupForm extends React.Component {
                   name="password"
                   onChange={this.handleChange}
                   minLength={8}
-          
+                  type="password"
                 />
               </div>
             </div>
