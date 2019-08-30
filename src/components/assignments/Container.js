@@ -45,6 +45,9 @@ class AssignmentContainer extends Component {
     await this.refreshAssignment()
   }
 
+  async gradeAssignment (assignment) {
+    console.log('I got pushed')
+  }
   async refreshAssignment () {
     const profile = await auth.profile()
     this.setState({userAssignments: profile.user.assignments})
@@ -60,12 +63,18 @@ class AssignmentContainer extends Component {
     }
     return (
       <div className="container">
-        <Route exact path='/' render={()=><AssignmentList assignments={this.state.userAssignments} destroyAssignment={this.destroyAssignment}/>}/>
+        <Route exact path='/' render={()=><AssignmentList assignments={this.state.userAssignments} destroyAssignment={this.destroyAssignment} isAdmin={this.props.isAdmin}/>}/>
         <Route exact path='/assignments/new' render={()=><NewItem onSubmit={this.createAssignment}/>}/>
         <Route exact path='/assignments/:id/edit' render={({match})=>{
           const assignment = assignments.find(assignment => assignment._id === match.params.id)
           return (<EditItem assignment={assignment} onSubmit={this.editAssignment}/>)
         }}/>
+        <Route exact path='/assignments/ungraded' render={()=> (
+          this.props.isAdmin ? <AssignmentList gradeAssignment={this.gradeAssignment} isAdmin={true} graded={false}/> : <Redirect to='/'/>
+        )} />
+        <Route exact path='/assignments/graded' render={()=> (
+          this.props.isAdmin ? <AssignmentList gradeAssignment={this.gradeAssignment} isAdmin={true} graded={true}/> : <Redirect to='/'/>
+        )} />
       </div>
     )
   }

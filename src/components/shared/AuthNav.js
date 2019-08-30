@@ -16,24 +16,45 @@ class AuthNav extends React.Component {
       .then(() => this.props.history.push('/login'))
   }
 
-  render() { 
+  render() {
+    console.log(this.props)
+    if (!this.props.isAdmin) {
+      return (
+        <nav className="navbar navbar-expand-sm navbar-light bg-light">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/">Home</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/students">All Students</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/assignments/new">Create New Assignment</NavLink>
+            </li>
+            <li className="nav-item">
+              <span className="nav-link" onClick={this.clickHandler}>Logout</span>
+            </li>
+          </ul>
+        </nav>
+      )
+    }
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-light">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/">Home</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/students">All Students</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/assignments/new">Create New Assignment</NavLink>
-          </li>
-          <li className="nav-item">
-            <span className="nav-link" onClick={this.clickHandler}>Logout</span>
-          </li>
-        </ul>
-      </nav>
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/students">All Students</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/assignments/ungraded">Ungraded Assignments</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/assignments/graded">Graded Assignments</NavLink>
+            </li>
+            <li className="nav-item">
+              <span className="nav-link" onClick={this.clickHandler}>Logout</span>
+            </li>
+          </ul>
+        </nav>
     )
   }
 }

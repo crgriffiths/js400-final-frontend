@@ -15,6 +15,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       currentUserId: null,
+      isAdmin: false,
       loading: true
     }
     this.loginUser = this.loginUser.bind(this)
@@ -24,7 +25,7 @@ class App extends React.Component {
   async componentDidMount () {
     if (token.getToken()) {
       const { user } = await auth.profile();
-      this.setState({ currentUserId: user._id, loading: false });
+      this.setState({ currentUserId: user._id, isAdmin: user.isAdmin, loading: false });
     } else {
       this.setState({ loading: false })
     }
@@ -35,7 +36,7 @@ class App extends React.Component {
     if (response.status === 200) {
       await token.setToken(response.token)
       const profile = await auth.profile()
-      this.setState({currentUserId: profile.user._id})
+      this.setState({currentUserId: profile.user._id, isAdmin: profile.user.isAdmin})
       return
     }
     return response
@@ -51,12 +52,12 @@ class App extends React.Component {
     await token.setToken(response.token)
     
     const profile = await auth.profile()
-    this.setState({ currentUserId: profile.user._id })
+    this.setState({ currentUserId: profile.user._id, isAdmin: profile.user.isAdmin})
   }
 
 
   render() {
-    const { currentUserId, loading } = this.state
+    const { currentUserId, isAdmin, loading } = this.state
     if(loading) {
       return (
           <>
@@ -82,8 +83,9 @@ class App extends React.Component {
           <NavContainer
             currentUserId={currentUserId}
             logoutUser={this.logoutUser}
+            isAdmin={isAdmin}
           />
-          <Route path='/' render={()=>(currentUserId?<AssignmentContainer currentUserId={currentUserId}/>:<Redirect to='/login'/>)} />
+          <Route path='/' render={()=>(currentUserId?<AssignmentContainer currentUserId={currentUserId} isAdmin={isAdmin}/>:<Redirect to='/login'/>)} />
           <Route path='/students' render={()=>(currentUserId?<StudentContainer currentUserId={currentUserId}/>:<Redirect to='/login'/>)} />
           <Route exact path='/login' render={()=>(currentUserId?<Redirect to='/'/>:<AuthContainer onSubmit={this.loginUser} isLoginPath={true}/>)} />
           <Route exact path='/signup' render={()=>(currentUserId?<Redirect to='/'/>:<AuthContainer onSubmit={this.signupUser} isLoginPath={false}/>)} />

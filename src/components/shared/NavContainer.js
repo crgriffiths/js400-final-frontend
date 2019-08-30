@@ -4,12 +4,12 @@ import React from 'react'
 import UnauthNav from './UnauthNav'
 import AuthNav from './AuthNav'
 
-export default ({ currentUserId, logoutUser }) => (
+export default ({ currentUserId, logoutUser, isAdmin }) => (
   <div>
     <div className='app-navigation'>
       {
         currentUserId
-          ? <AuthNav currentUserId={currentUserId} logoutUser={logoutUser} />
+          ? <AuthNav currentUserId={currentUserId} logoutUser={logoutUser} isAdmin={isAdmin}/>
           : <UnauthNav />
       }
     </div>

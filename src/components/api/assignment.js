@@ -43,3 +43,29 @@ export const edit = async (assignment) => {
   console.log(json)
   return json
 }
+
+export const graded = async () => {
+  const response = await fetch(`${API_URL}/api/assignments/graded`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token.getToken()}`
+    },
+    method: 'GET'
+  })
+  const json = await response.json()
+  console.log(json)
+  return json
+}
+
+export const ungraded = async () => {
+  const response = await fetch(`${API_URL}/api/assignments/ungraded`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token.getToken()}`
+    },
+    method: 'GET'
+  })
+  const json = await response.json()
+  console.log(json)
+  return json
+}
