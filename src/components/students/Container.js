@@ -1,48 +1,42 @@
 import React, { Component } from 'react';
-import {Route, Redirect, withRouter} from 'react-router-dom'
 import * as students from '../api/users'
+import * as auth from '../api/auth'
 import StudentsList from './List/List'
+import GradeFilter from './List/Filters'
 
 class StudentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [],
+      isAdmin: false,
       loading: true
     }
+    this.filterResults = this.filterResults.bind(this)
   }
+
   async componentDidMount() {
     const allUsers = await students.getUsers()
-    console.log(allUsers)
-    this.setState({users: allUsers.response, loading: false })
+    const profile = await auth.profile()
+    this.setState({users: allUsers.response, isAdmin: profile.user.isAdmin, loading: false })
   }
 
-  /*async createAssignment (newItem) {
-    console.log(actions)
-    const response = await actions.create(newItem)
-    await this.refreshAssignment()
-    
-  }
-  async destroyAssignment (assignment) {
-    if(window.confirm(`Delete '${assignment.title}'?`)){
-      const response = await actions.destroy(assignment)
-      await this.refreshAssignment()
-      alert(`WARNING: deleting assignment '${assignment.title}' is a permanent action`)
+  async filterResults (range) {
+    const users = this.state.users
+    if (range.scoreAbove === "" && range.scoreBelow === "") {
+      const allUsers = await students.getUsers()
+      this.setState({users: allUsers.response})
       return
     }
+    const filteredUsers = await users.filter(user => {
+      if (user.gradeTotal && user.gradeTotal.pointsEarned >= range.scoreAbove && user.gradeTotal.pointsEarned <= range.scoreBelow){
+        return user
+      }
+    })
+    this.setState({users: filteredUsers})
   }
 
-  async editAssignment (assignment) {
-    const response = await actions.edit(assignment)
-    await this.refreshAssignment()
-  }
-
-  async refreshAssignment () {
-    const profile = await auth.profile()
-    this.setState({userAssignments: profile.user.assignments})
-  } */
   render() {
-    //const assignments = this.state.userAssignments
     if (this.state.loading){
       return (
         <div className="container">
@@ -50,10 +44,18 @@ class StudentContainer extends Component {
         </div>
       )
     }
+    let filters
+    if (this.state.isAdmin) {
+      filters = <GradeFilter onSubmit={this.filterResults}/>
+    }
     return (
-      <StudentsList students={this.state.users}/>
+      <div className="container">
+        {filters}
+        <StudentsList students={this.state.users}/>
+      </div>
+      
     )
   }
 }
  
-export default withRouter(StudentContainer);
+export default StudentContainer;
